@@ -1,0 +1,25 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'demo1'
+Resources:
+  Cron:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        LambdaModule: !GetAtt 'Function.Outputs.StackName'
+        ScheduleExpression: 'rate(5 minutes)'
+      TemplateURL: './node_modules/@cfn-modules/lambda-event-source-cron/module.yml'
+  Function:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        Handler: 'lambda.handler'
+        MemorySize: '128'
+        Runtime: 'nodejs8.10'
+        Timeout: '3'
+      TemplateURL: './node_modules/@cfn-modules/lambda-function/module.yml'
+Outputs:
+  LogsLinkView1:
+    Value: !Sub 'https://console.aws.amazon.com/cloudwatch/home?region=${AWS::Region}#logEventViewer:group=/aws/lambda/${Function.Outputs.Name};filter=view1'
+  LogsLinkView2:
+    Value: !Sub 'https://console.aws.amazon.com/cloudwatch/home?region=${AWS::Region}#logEventViewer:group=/aws/lambda/${Function.Outputs.Name};filter=view2'

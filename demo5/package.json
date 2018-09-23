@@ -1,0 +1,17 @@
+{
+  "name": "demo5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cfn-modules/dynamodb-table": "1.0.0",
+    "@cfn-modules/kinesis-data-stream": "0.1.0",
+    "@cfn-modules/lambda-event-source-kinesis-data-stream": "0.1.0",
+    "@cfn-modules/lambda-function": "1.0.0"
+  }
+}

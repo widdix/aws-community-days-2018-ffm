@@ -1,0 +1,25 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'demo4'
+Resources:
+  StatusTable:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        TableName: !Sub '${AWS::StackName}-status'
+        PartitionKeyName: user_id
+        SortKeyName: status_no
+      TemplateURL: './node_modules/@cfn-modules/dynamodb-table/module.yml'
+  CreateFunction:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        Handler: 'create.handler'
+        MemorySize: '128'
+        Runtime: 'nodejs8.10'
+        Timeout: '10'
+        DependencyModule1: !GetAtt 'StatusTable.Outputs.StackName'
+      TemplateURL: './node_modules/@cfn-modules/lambda-function/module.yml'
+Outputs:
+  CreateFunctionName:
+    Value: !GetAtt 'CreateFunction.Outputs.Name'

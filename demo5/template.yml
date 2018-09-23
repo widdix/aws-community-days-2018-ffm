@@ -1,0 +1,38 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'demo5'
+Resources:
+  DataStream:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      TemplateURL: './node_modules/@cfn-modules/kinesis-data-stream/module.yml'
+  StatusTable:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        TableName: !Sub '${AWS::StackName}-status'
+        PartitionKeyName: user_id
+        SortKeyName: status_sequence_number
+        SortKeyType: S
+      TemplateURL: './node_modules/@cfn-modules/dynamodb-table/module.yml'
+  CreateFunction:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        Handler: 'create.handler'
+        MemorySize: '128'
+        Runtime: 'nodejs8.10'
+        Timeout: '10'
+        DependencyModule1: !GetAtt 'StatusTable.Outputs.StackName'
+      TemplateURL: './node_modules/@cfn-modules/lambda-function/module.yml'
+  EventSource:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        LambdaModule: !GetAtt 'CreateFunction.Outputs.StackName'
+        DataStreamModule: !GetAtt 'DataStream.Outputs.StackName'
+        BatchSize: '4'
+      TemplateURL: './node_modules/@cfn-modules/lambda-event-source-kinesis-data-stream/module.yml'
+Outputs:
+  DataStreamName:
+    Value: !GetAtt 'DataStream.Outputs.Name'
