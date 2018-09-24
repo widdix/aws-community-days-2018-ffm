@@ -1,4 +1,4 @@
-# demo8
+# demo8: at-most-once Slack message
 
 Create a Slack [incoming webhook](https://api.slack.com/incoming-webhooks) and create a configuration file:
 

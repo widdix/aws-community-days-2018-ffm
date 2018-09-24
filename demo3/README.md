@@ -1,4 +1,4 @@
-# demo3
+# demo3: Twitter like status updates - Status update creation time as an input (broken: missing updates)
 
 Run `deploy.sh` to deploy the demo stack(s).
 

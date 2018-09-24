@@ -1,4 +1,4 @@
-# demo4
+# demo4: Twitter like status updates - Previous status update as an input (broken: missing updates)
 
 Run `deploy.sh` to deploy the demo stack(s).
 

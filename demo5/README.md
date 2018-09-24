@@ -1,4 +1,4 @@
-# demo5
+# demo5: Twitter like status updates - Use Kinesis Data Stream in between
 
 Run `deploy.sh` to deploy the demo stack(s).
 

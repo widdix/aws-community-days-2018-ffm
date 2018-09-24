@@ -1,4 +1,4 @@
-# demo1
+# demo1: Something is wrong here
 
 Run `deploy.sh` to deploy the demo stack(s).
 
