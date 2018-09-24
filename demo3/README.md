@@ -1,6 +1,6 @@
-# demo6
+# demo3
 
-> demo6 relies on demo5
+Run `deploy.sh` to deploy the demo stack(s).
 
 Open multiple terminals and run `test.sh` with different arguments, e.g.: `test.sh 1`, `test.sh 2`, ..., `test.sh 10` to simulate 10 concurrent users who post status updates.
 
