@@ -1,0 +1,23 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'demo9'
+Resources:
+  WebhookTable:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        TableName: !Sub '${AWS::StackName}-webhook'
+      TemplateURL: './node_modules/@cfn-modules/dynamodb-table/module.yml'
+  WebhookFunction:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        Handler: 'webhook.handler'
+        MemorySize: '128'
+        Runtime: 'nodejs8.10'
+        Timeout: '10'
+        DependencyModule1: !GetAtt 'WebhookTable.Outputs.StackName'
+      TemplateURL: './node_modules/@cfn-modules/lambda-function/module.yml'
+Outputs:
+  WebhookFunctionName:
+    Value: !GetAtt 'WebhookFunction.Outputs.Name'
