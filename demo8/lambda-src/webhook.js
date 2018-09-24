@@ -23,13 +23,13 @@ const callWebhook = (url, body) => new Promise((resolve, reject) => {
       reject(err);
     } else {
       if (res.statusCode === 200) {
-        if (body.ok === true) {
+        if (body === 'ok') {
           resolve(body);
         } else {
-          reject(new Error('Slack not ok'));
+          reject(new Error(`Slack not ok: ${body}`));
         }
       } else {
-        reject(new Error('Slack not 200'));
+        reject(new Error(`Slack not 200: ${res.statusCode}`));
       }
     }
   });
