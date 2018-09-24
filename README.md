@@ -1,10 +1,5 @@
 # Your Lambda function might execute twice. Be prepared!
 
-## Demos
-
-* demo1: Cron triggert Lambda function that fails for 25% of the times and outputs system time
-* demo2: Cron triggert Lambda function that fails for 25% of the times and outputs system time + event time
-
 ## Prepare demos
 
 ```

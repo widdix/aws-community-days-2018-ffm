@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "dependencies": {
+    "request": "2.88.0"
+  },
+  "devDependencies": {
+    "aws-sdk": "2.284.1",
+    "eslint": "5.6.0"
+  }
+}
