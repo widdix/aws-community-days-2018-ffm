@@ -20,14 +20,23 @@ exports.handler = async (event) => { // idempotent but status updates can be los
   } else {
     no = 1;
   }
-  await dynamodb.putItem({
-    TableName: STATUS_TABLE_NAME,
-    Item: {
-      user_id: {S: event.id},
-      status_no: {N: String(no)},
-      status: {S: event.status},
-      created_at: {S: new Date().toISOString()} // strictly speaking, this is not idempotent
+  try {
+    await dynamodb.putItem({
+      TableName: STATUS_TABLE_NAME,
+      Item: {
+        user_id: {S: event.id},
+        status_no: {N: String(no)},
+        status: {S: event.status},
+        created_at: {S: new Date().toISOString()} // the item is only written once, so the changing date doesn't matter
+      },
+      ConditionExpression: 'attribute_not_exists(user_id) AND attribute_not_exists(status_no)'
+    }).promise();
+    return {};
+  } catch (err) {
+    if (err.code === 'ConditionalCheckFailedException') { // already created, skip event
+      return {};
+    } else {
+      throw err;
     }
-  }).promise();
-  return {};
+  }
 };
